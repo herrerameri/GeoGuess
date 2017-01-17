@@ -13,6 +13,12 @@
 		29A0772E1E2CB3F300D6CA91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A0772C1E2CB3F300D6CA91 /* Main.storyboard */; };
 		29A077301E2CB3F400D6CA91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29A0772F1E2CB3F400D6CA91 /* Assets.xcassets */; };
 		29A077331E2CB3F400D6CA91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29A077311E2CB3F400D6CA91 /* LaunchScreen.storyboard */; };
+		29A0773C1E2CB67000D6CA91 /* Monumento.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A0773B1E2CB67000D6CA91 /* Monumento.m */; };
+		29A0773F1E2CC8EA00D6CA91 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29A0773E1E2CC8EA00D6CA91 /* QuartzCore.framework */; };
+		29A0774C1E2E277C00D6CA91 /* applause-light-02.wav in Resources */ = {isa = PBXBuildFile; fileRef = 29A077491E2E277C00D6CA91 /* applause-light-02.wav */; };
+		29A0774D1E2E277C00D6CA91 /* applause-moderate-03.wav in Resources */ = {isa = PBXBuildFile; fileRef = 29A0774A1E2E277C00D6CA91 /* applause-moderate-03.wav */; };
+		29A0774E1E2E277C00D6CA91 /* boo-01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 29A0774B1E2E277C00D6CA91 /* boo-01.wav */; };
+		29A077521E2E283300D6CA91 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A077511E2E283300D6CA91 /* SoundManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +32,14 @@
 		29A0772F1E2CB3F400D6CA91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		29A077321E2CB3F400D6CA91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		29A077341E2CB3F400D6CA91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		29A0773A1E2CB67000D6CA91 /* Monumento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Monumento.h; sourceTree = "<group>"; };
+		29A0773B1E2CB67000D6CA91 /* Monumento.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Monumento.m; sourceTree = "<group>"; };
+		29A0773E1E2CC8EA00D6CA91 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		29A077491E2E277C00D6CA91 /* applause-light-02.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "applause-light-02.wav"; sourceTree = "<group>"; };
+		29A0774A1E2E277C00D6CA91 /* applause-moderate-03.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "applause-moderate-03.wav"; sourceTree = "<group>"; };
+		29A0774B1E2E277C00D6CA91 /* boo-01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "boo-01.wav"; sourceTree = "<group>"; };
+		29A077501E2E283300D6CA91 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		29A077511E2E283300D6CA91 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29A0773F1E2CC8EA00D6CA91 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +59,7 @@
 			children = (
 				29A077221E2CB3F300D6CA91 /* GeoGuess */,
 				29A077211E2CB3F300D6CA91 /* Products */,
+				29A0773D1E2CC8EA00D6CA91 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +74,7 @@
 		29A077221E2CB3F300D6CA91 /* GeoGuess */ = {
 			isa = PBXGroup;
 			children = (
+				29A0774F1E2E283300D6CA91 /* SoundManager */,
 				29A077261E2CB3F300D6CA91 /* AppDelegate.h */,
 				29A077271E2CB3F300D6CA91 /* AppDelegate.m */,
 				29A077291E2CB3F300D6CA91 /* ViewController.h */,
@@ -66,7 +83,10 @@
 				29A0772F1E2CB3F400D6CA91 /* Assets.xcassets */,
 				29A077311E2CB3F400D6CA91 /* LaunchScreen.storyboard */,
 				29A077341E2CB3F400D6CA91 /* Info.plist */,
+				29A077481E2E277C00D6CA91 /* prac_03_sonidos */,
 				29A077231E2CB3F300D6CA91 /* Supporting Files */,
+				29A0773A1E2CB67000D6CA91 /* Monumento.h */,
+				29A0773B1E2CB67000D6CA91 /* Monumento.m */,
 			);
 			path = GeoGuess;
 			sourceTree = "<group>";
@@ -77,6 +97,33 @@
 				29A077241E2CB3F300D6CA91 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		29A0773D1E2CC8EA00D6CA91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29A0773E1E2CC8EA00D6CA91 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		29A077481E2E277C00D6CA91 /* prac_03_sonidos */ = {
+			isa = PBXGroup;
+			children = (
+				29A077491E2E277C00D6CA91 /* applause-light-02.wav */,
+				29A0774A1E2E277C00D6CA91 /* applause-moderate-03.wav */,
+				29A0774B1E2E277C00D6CA91 /* boo-01.wav */,
+			);
+			path = prac_03_sonidos;
+			sourceTree = "<group>";
+		};
+		29A0774F1E2E283300D6CA91 /* SoundManager */ = {
+			isa = PBXGroup;
+			children = (
+				29A077501E2E283300D6CA91 /* SoundManager.h */,
+				29A077511E2E283300D6CA91 /* SoundManager.m */,
+			);
+			path = SoundManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +184,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29A0774E1E2E277C00D6CA91 /* boo-01.wav in Resources */,
+				29A0774C1E2E277C00D6CA91 /* applause-light-02.wav in Resources */,
+				29A0774D1E2E277C00D6CA91 /* applause-moderate-03.wav in Resources */,
 				29A077331E2CB3F400D6CA91 /* LaunchScreen.storyboard in Resources */,
 				29A077301E2CB3F400D6CA91 /* Assets.xcassets in Resources */,
 				29A0772E1E2CB3F300D6CA91 /* Main.storyboard in Resources */,
@@ -150,8 +200,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29A0773C1E2CB67000D6CA91 /* Monumento.m in Sources */,
 				29A0772B1E2CB3F300D6CA91 /* ViewController.m in Sources */,
 				29A077281E2CB3F300D6CA91 /* AppDelegate.m in Sources */,
+				29A077521E2E283300D6CA91 /* SoundManager.m in Sources */,
 				29A077251E2CB3F300D6CA91 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +361,7 @@
 				29A077391E2CB3F400D6CA91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
