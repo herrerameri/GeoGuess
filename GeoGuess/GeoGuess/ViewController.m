@@ -12,8 +12,9 @@
 
 @interface ViewController (){
     UILongPressGestureRecognizer* longPressGestureRecognizer;
+    UISwipeGestureRecognizer* swipeGestureRecognizer;
     Monumento* monumentoEnJuego;
-    CGPoint eleccionUsuario;
+    CLLocationCoordinate2D eleccionUsuario;
 }
 
 @end
@@ -29,6 +30,13 @@
     // Borde curvo
     _viewInstrucciones.layer.cornerRadius = 5;
     _viewInstrucciones.layer.masksToBounds = YES;
+    [_mapaResultado setDelegate:self];
+    
+    longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
+                                  initWithTarget:self
+                                  action:@selector(handleLongPressGesture:)];
+    swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(siguienteMonumento:)];
+    [swipeGestureRecognizer setDirection:UISwipeGestureRecognizerDirectionLeft];
     
     [self initJuego];
 }
@@ -39,6 +47,7 @@
     [self initMonumentos];
     [self mostrarMonumento];
     _distanciaPartida = 0;
+    [_labelDistanciaTotal setText: [NSString stringWithFormat:@"%dkm",_distanciaPartida]];
 }
 
 // Muestra un monumento al azar en el mapaMonumento.
@@ -48,6 +57,9 @@
 // opción de volver a empezar el juego.
 -(void) mostrarMonumento {
     monumentoEnJuego = [self selectRandomMonumento];
+    [self.view removeGestureRecognizer:swipeGestureRecognizer];
+    
+    [self deshabilitarAmbos];
     if(monumentoEnJuego != nil)
     {
         CLLocationCoordinate2D posicionMonumento = CLLocationCoordinate2DMake(monumentoEnJuego.lat, monumentoEnJuego.lng);
@@ -59,9 +71,6 @@
         [currentCamera setHeading:monumentoEnJuego.heading];
         [_mapaMonumento setCamera:currentCamera animated:NO];
         
-        longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
-                                                   initWithTarget:self
-                                                   action:@selector(handleLongPressGesture:)];
         [_mapaResultado addGestureRecognizer:longPressGestureRecognizer];
     }
     else
@@ -112,11 +121,12 @@
         return;
     
     [self borrarAnotaciones];
-    eleccionUsuario = [gestureRecognizer locationInView:_mapaResultado];
-    CLLocationCoordinate2D touchMapCoordinate = [_mapaResultado convertPoint:eleccionUsuario
+    CGPoint puntoEnView = [gestureRecognizer locationInView:_mapaResultado];
+    eleccionUsuario = [_mapaResultado convertPoint:puntoEnView
                                                         toCoordinateFromView:_mapaResultado];
     
-    [self mostrarAnotacion:touchMapCoordinate title:@"Tu respuesta" subtitle:@"¡Esta es tu elección!"];
+    [self mostrarAnotacion:eleccionUsuario title:@"Tu respuesta" subtitle:@"¡Esta es tu elección!"];
+    [self habilitarAccionValidar];
 }
 
 // Muestra una anotación (MKPointAnnotation) en el mapaMundo.
@@ -131,9 +141,8 @@
 
 // Borra las anotaciones y los overlays anteriores del mapaMundo.
 -(void)borrarAnotaciones {
-    for (id annotation in _mapaResultado.annotations) {
-        [_mapaResultado removeAnnotation:annotation];
-    }
+    [_mapaResultado removeAnnotations:_mapaResultado.annotations];
+    [_mapaResultado removeOverlays:_mapaResultado.overlays];
 }
 
 // Nos devuelve un número aleatorio entre dos valores.
@@ -150,19 +159,21 @@
 // Llama a la función de dibujar línea
 - (IBAction)validarJuego:(id)sender {
     [_mapaResultado removeGestureRecognizer: longPressGestureRecognizer];
+    [self.view addGestureRecognizer:swipeGestureRecognizer];
     
     CLLocation *hasta = [[CLLocation alloc] initWithLatitude:monumentoEnJuego.lat longitude:monumentoEnJuego.lng];
-    CLLocation *desde = [[CLLocation alloc] initWithLatitude:eleccionUsuario.y longitude:eleccionUsuario.x];
+    CLLocation *desde = [[CLLocation alloc] initWithLatitude:eleccionUsuario.latitude longitude:eleccionUsuario.longitude];
     int distancia = [self distancia:desde hasta:hasta];
     
     CLLocationCoordinate2D coordMonumento = CLLocationCoordinate2DMake(monumentoEnJuego.lat, monumentoEnJuego.lng);
-    CLLocationCoordinate2D coordUsuario = CLLocationCoordinate2DMake(eleccionUsuario.y, eleccionUsuario.x);
+    CLLocationCoordinate2D coordUsuario = CLLocationCoordinate2DMake(eleccionUsuario.latitude, eleccionUsuario.longitude);
     
-    [self setRegion:coordMonumento distancia:monumentoEnJuego.distancia enMapa:_mapaResultado];
-    NSString* subtitulo = [NSString stringWithFormat:@"%(%dkm)", monumentoEnJuego.ciudad, distancia];
+    [_mapaResultado showAnnotations:@[desde,hasta] animated:YES];
+    NSString* subtitulo = [NSString stringWithFormat:@"%@(%d km)", monumentoEnJuego.ciudad, distancia];
     [self mostrarAnotacion:coordMonumento title:monumentoEnJuego.nombre subtitle:subtitulo];
     
     [self dibujarLineaDesde:coordUsuario hasta:coordMonumento];
+    [self habilitarAccionSiguiente];
 }
 
 // Llama a la función de borrarAnotaciones.
@@ -170,7 +181,6 @@
 // Vuelve a agregar el longPress gesture recognizer al mapa.
 - (IBAction)siguienteMonumento:(id)sender {
     [self borrarAnotaciones];
-    _mapaResultado = [[MKMapView alloc] init];
     [self mostrarMonumento];
 }
 
@@ -179,7 +189,7 @@
 - (int) distancia:(CLLocation*)desde hasta:(CLLocation*)hasta {
     int distancia = [hasta distanceFromLocation:desde] / 1000;
     _distanciaPartida += distancia;
-    [_labelDistanciaTotal setText: [NSString stringWithFormat:@"%fkm",_distanciaPartida]];
+    [_labelDistanciaTotal setText: [NSString stringWithFormat:@"%dkm",_distanciaPartida]];
     
     if(distancia < 300)
     {
@@ -207,8 +217,49 @@
     
     points[0] = desde;
     points[1] = hasta;
-    MKPolygon *regionPolygon = [MKPolygon polygonWithCoordinates:points count:2];
-    [_mapaResultado addOverlay:regionPolygon];
+    MKPolyline *overlayPolyline = [MKPolyline polylineWithCoordinates:points count:2];
+    MKGeodesicPolyline *geodesicPolyline = [MKGeodesicPolyline polylineWithCoordinates:points count:2];
+    
+    [_mapaResultado addOverlay:overlayPolyline];
+    [_mapaResultado addOverlay:geodesicPolyline];
+}
+
+
+- (MKOverlayRenderer *) mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    
+    MKPolylineRenderer *polylineRender  = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+    UIColor *lineColor = [UIColor redColor];
+    [polylineRender setStrokeColor:lineColor];
+    [polylineRender setLineWidth:3.0f];
+    
+    return polylineRender;
+}
+
+-(void) habilitarAccionSiguiente {
+    [_buttonValida setEnabled:NO];
+    [_buttonValida setBackgroundColor:[UIColor lightGrayColor]];
+    [_buttonSiguiente setEnabled:YES];
+    [_buttonSiguiente setBackgroundColor:[UIColor orangeColor]];
+    [_labelEtiquetaTitulo setText: monumentoEnJuego.nombre];
+    [_labelEtiquetaSubtitulo setText:monumentoEnJuego.ciudad.uppercaseString];
+}
+
+-(void) habilitarAccionValidar {
+    [_buttonSiguiente setEnabled:NO];
+    [_buttonSiguiente setBackgroundColor:[UIColor lightGrayColor]];
+    [_buttonValida setEnabled:YES];
+    [_buttonValida setBackgroundColor:[UIColor orangeColor]];
+    [_labelEtiquetaTitulo setText:@"Sitúa el monumento en el mapa"];
+    [_labelEtiquetaSubtitulo setText:@""];
+}
+
+-(void) deshabilitarAmbos {
+    [_buttonSiguiente setEnabled:NO];
+    [_buttonSiguiente setBackgroundColor:[UIColor lightGrayColor]];
+    [_buttonValida setEnabled:NO];
+    [_buttonValida setBackgroundColor:[UIColor lightGrayColor]];
+    [_labelEtiquetaTitulo setText:@"Sitúa el monumento en el mapa"];
+    [_labelEtiquetaSubtitulo setText:@""];
 }
 
 -(void) initMonumentos {

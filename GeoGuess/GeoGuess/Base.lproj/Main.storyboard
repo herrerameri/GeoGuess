@@ -31,16 +31,16 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sitúa el monumento en el mapa" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xee-OH-gy5" userLabel="etiquetaCentral">
-                                        <rect key="frame" x="8" y="42" width="947" height="21"/>
+                                        <rect key="frame" x="8" y="29" width="963" height="21"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b83-n9-Y7G" userLabel="botonValida">
-                                        <rect key="frame" x="874" y="30" width="62" height="46"/>
+                                        <rect key="frame" x="804" y="30" width="62" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <color key="backgroundColor" red="0.93915591030000001" green="0.55497030609999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
                                         <state key="normal" title="OK">
                                             <color key="titleColor" red="1" green="0.97858364860000002" blue="0.97399850740000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -59,9 +59,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="neM-Bm-ZG6" userLabel="botonNext">
-                                        <rect key="frame" x="804" y="30" width="62" height="46"/>
+                                        <rect key="frame" x="874" y="30" width="62" height="46"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <color key="backgroundColor" red="0.93915591032608692" green="0.5549703061420258" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="19"/>
                                         <state key="normal" title="&gt;&gt;">
                                             <color key="titleColor" red="1" green="0.978583648591693" blue="0.97399850742545879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,6 +70,13 @@
                                             <action selector="siguienteMonumento:" destination="BYZ-38-t0r" eventType="touchUpInside" id="juj-vW-xk5"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IHp-wd-3nc" userLabel="etiquetaSubtitulo">
+                                        <rect key="frame" x="8" y="63" width="963" height="21"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -77,7 +84,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="buttonSiguiente" destination="neM-Bm-ZG6" id="36j-q5-7w1"/>
+                        <outlet property="buttonValida" destination="b83-n9-Y7G" id="NO3-vl-KRP"/>
                         <outlet property="labelDistanciaTotal" destination="5l5-sL-VS6" id="Odh-7R-yud"/>
+                        <outlet property="labelEtiquetaSubtitulo" destination="IHp-wd-3nc" id="6xb-d6-Hbw"/>
+                        <outlet property="labelEtiquetaTitulo" destination="Xee-OH-gy5" id="FSq-rL-N5h"/>
                         <outlet property="mapaMonumento" destination="2GC-X2-SYC" id="Ej2-pt-Rs0"/>
                         <outlet property="mapaResultado" destination="zPr-1k-etd" id="Ih3-7S-OE3"/>
                         <outlet property="viewInstrucciones" destination="fRL-rO-bkn" id="Y5Q-Ap-Cu6"/>
