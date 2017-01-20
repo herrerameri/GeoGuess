@@ -28,10 +28,19 @@
     [_mapaMonumento setPitchEnabled:YES];
     
     // Borde curvo
-    _viewInstrucciones.layer.cornerRadius = 5;
+    _viewInstrucciones.layer.cornerRadius = 8;
     _viewInstrucciones.layer.masksToBounds = YES;
+    _buttonValida.layer.cornerRadius = 8;
+    _buttonSiguiente.layer.cornerRadius = 8;
+    
     [_mapaResultado setDelegate:self];
     
+    // Damos al mapa el zoom adecuado
+    _mapaResultado.camera.altitude = 7000000;
+    CLLocationCoordinate2D puntoCentro = CLLocationCoordinate2DMake(48.8583701, 2.2922926);
+    _mapaResultado.camera.centerCoordinate = puntoCentro;
+    
+    // Inicializamos los gestos
     longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc]
                                   initWithTarget:self
                                   action:@selector(handleLongPressGesture:)];
@@ -168,10 +177,10 @@
     CLLocationCoordinate2D coordMonumento = CLLocationCoordinate2DMake(monumentoEnJuego.lat, monumentoEnJuego.lng);
     CLLocationCoordinate2D coordUsuario = CLLocationCoordinate2DMake(eleccionUsuario.latitude, eleccionUsuario.longitude);
     
-    [_mapaResultado showAnnotations:@[desde,hasta] animated:YES];
-    NSString* subtitulo = [NSString stringWithFormat:@"%@(%d km)", monumentoEnJuego.ciudad, distancia];
-    [self mostrarAnotacion:coordMonumento title:monumentoEnJuego.nombre subtitle:subtitulo];
+    _mapaResultado.camera.centerCoordinate = coordMonumento;
     
+    NSString* subtitulo = [NSString stringWithFormat:@"%@ (%d km)", monumentoEnJuego.ciudad, distancia];
+    [self mostrarAnotacion:coordMonumento title:monumentoEnJuego.nombre subtitle:subtitulo];
     [self dibujarLineaDesde:coordUsuario hasta:coordMonumento];
     [self habilitarAccionSiguiente];
 }
@@ -218,10 +227,8 @@
     points[0] = desde;
     points[1] = hasta;
     MKPolyline *overlayPolyline = [MKPolyline polylineWithCoordinates:points count:2];
-    MKGeodesicPolyline *geodesicPolyline = [MKGeodesicPolyline polylineWithCoordinates:points count:2];
     
     [_mapaResultado addOverlay:overlayPolyline];
-    [_mapaResultado addOverlay:geodesicPolyline];
 }
 
 
