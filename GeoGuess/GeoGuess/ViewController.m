@@ -85,20 +85,29 @@
     else
     {
         // Volver a comenzar?
-        UIAlertController *alerta = [UIAlertController
+        UIAlertController * alert = [UIAlertController
                                      alertControllerWithTitle:@"¿Otra oportunidad?"
                                      message:@"El juego ha terminado. ¡Puedes volver a comenzar!"
                                      preferredStyle:UIAlertControllerStyleAlert];
         
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:@"Si"
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        [self initJuego];
+                                    }];
         
-        UIAlertAction *ok = [UIAlertAction actionWithTitle:@"OK"
-                                                     style:UIAlertActionStyleDefault
-                                                   handler:^(UIAlertAction * action){
-                                                      [self initJuego];
-                                                   }];
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:@"Cancelar"
+                                   style:UIAlertActionStyleDefault
+                                   handler:^(UIAlertAction * action) {
+                                       [self dismissViewControllerAnimated:YES completion:nil];
+                                   }];
         
-        [alerta addAction:ok];
-        [self presentViewController:alerta animated:YES completion:nil];
+        [alert addAction:yesButton];
+        [alert addAction:noButton];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
 }
 
@@ -146,6 +155,7 @@
     [annotation setSubtitle:subtitulo];
     
     [_mapaResultado addAnnotation:annotation];
+    [_mapaResultado setSelectedAnnotations:@[annotation]];
 }
 
 // Borra las anotaciones y los overlays anteriores del mapaMundo.
