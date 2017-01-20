@@ -59,7 +59,7 @@
     monumentoEnJuego = [self selectRandomMonumento];
     [self.view removeGestureRecognizer:swipeGestureRecognizer];
     
-    [self deshabilitarAmbos];
+    [self deshabilitarAcciones];
     if(monumentoEnJuego != nil)
     {
         CLLocationCoordinate2D posicionMonumento = CLLocationCoordinate2DMake(monumentoEnJuego.lat, monumentoEnJuego.lng);
@@ -253,7 +253,7 @@
     [_labelEtiquetaSubtitulo setText:@""];
 }
 
--(void) deshabilitarAmbos {
+-(void) deshabilitarAcciones {
     [_buttonSiguiente setEnabled:NO];
     [_buttonSiguiente setBackgroundColor:[UIColor lightGrayColor]];
     [_buttonValida setEnabled:NO];
